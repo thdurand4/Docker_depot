@@ -48,36 +48,3 @@ RUN wget -O- https://github.com/gmarcais/Jellyfish/releases/download/v2.3.0/jell
  ./configure --prefix=/usr && \
  make && make install && \
  rm -fr /jellyfish-2.3.0
-
-#INSTALL PERL
-RUN wget https://github.com/Perl/perl5/archive/refs/tags/v5.36.1.tar.gz \
-  && tar fzx v5.36.1.tar.gz \
-  && cd perl5-5.36.1 \
-  && ./configure.gnu \
-  && make \
-  && make install 
-
-RUN apt-get update && apt-get install -y \
-  cpanminus \
-  pkg-config
-  
-
-RUN wget https://github.com/libgd/libgd/releases/download/gd-2.3.3/libgd-2.3.3.tar.gz \
-  && tar zxvf libgd-2.3.3.tar.gz \
-  && cd libgd-2.3.3 \
-  && ./configure \
-  && make \
-  && make install \
-  && make installcheck \
-  && cpanm --force GD::Simple \
-  && cpanm --force GD::SVG \
-  && cpanm --force Data::Dumper \
-  && cpanm --force Getopt::Long
-
-RUN apt-get update && apt-get install -y \
-  locales \
-  && export LANGUAGE=en_US.UTF-8 \
-  && export LANG=en_US.UTF-8 \
-  && export LC_ALL=en_US.UTF-8 \
-  && locale-gen en_US.UTF-8 \
-  && dpkg-reconfigure locales
